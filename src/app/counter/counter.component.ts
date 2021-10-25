@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core'
+import { Store } from '@ngrx/store'
+import { map } from 'rxjs/operators'
+import { countSelector, decr, incr, toDefaultValue } from '../reducers/counter'
 
 @Component({
   selector: 'app-counter',
@@ -6,23 +9,21 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./counter.component.css']
 })
 export class CounterComponent implements OnInit {
-  count: number = 0
   isDisabled: boolean = false
 
-  constructor() {}
+  count$ = this.store.select(countSelector)
+  cannotDecrease$ = this.count$.pipe(map(count => count <= 0))
 
-  get cannotDecrese(): boolean {
-    return this.count <= 0
-  }
+  constructor(private store: Store) {}
 
   incr(): void {
-    this.count++
+    this.store.dispatch(incr())
   }
   decr(): void {
-    this.count--
+    this.store.dispatch(decr())
   }
   toDefaultValue(): void {
-    this.count = 0
+    this.store.dispatch(toDefaultValue())
   }
 
   ngOnInit(): void {}

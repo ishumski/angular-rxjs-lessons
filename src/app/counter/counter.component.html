@@ -1,5 +1,5 @@
 <button (click)="incr()">+1</button>
-<button (click)="decr()" [disabled]="cannotDecrese">-1</button>
-<button (click)="toDefaultValue()" [disabled]="cannotDecrese">=0</button>
+<button (click)="decr()" [disabled]="cannotDecrease$ | async">-1</button>
+<button (click)="toDefaultValue()" [disabled]="cannotDecrease$ | async">=0</button>
 
-<p>{{ count }}</p>
+<p>{{ count$ | async }}</p>
